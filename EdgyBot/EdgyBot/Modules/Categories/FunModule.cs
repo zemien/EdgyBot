@@ -100,6 +100,12 @@ namespace EdgyBot.Modules.Categories
         public async Task BigLetterCmd([Remainder]string msg)
         {
             msg = msg.ToLower();
+            var emojiText = ConvertToEmoji(msg);
+            await ReplyAsync(emojiText);
+        }
+
+        public string ConvertToEmoji(string msg)
+        {
             StringBuilder sb = new StringBuilder();
             char[] letters = msg.ToCharArray();
             foreach (char letter in letters)
@@ -110,9 +116,10 @@ namespace EdgyBot.Modules.Categories
                     sb.Append(" ");
                     continue;
                 }
-                sb.Append(":regional_indicator_" + letter + ":");
+                sb.Append(":regional_indicator_" + letter + ": ");
             }
-            await ReplyAsync(sb.ToString());
+
+            return sb.ToString().Trim();
         }
 
         [Command("juststop"), Alias("stopit", "timetostop")]
